@@ -14,10 +14,17 @@ function setQuery(event){
 }
 
 function getResults(query){
-    fetch(`${api.baseurl}weather?q=${query}&units=imperial&APPID=${api.key}`)
+    if(isNaN(query)){
+        fetch(`${api.baseurl}weather?q=${query}&units=imperial&APPID=${api.key}`)
+        .then(weather => {
+            return weather.json();
+        }).then(displayResults);
+    }else{
+        fetch(`${api.baseurl}weather?zip=${query}&units=imperial&APPID=${api.key}`)
     .then(weather => {
         return weather.json();
     }).then(displayResults);
+    }
 }
 
 function displayResults(weather){
